@@ -2,9 +2,11 @@ package progs.azzymordor.weathermenotlite;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     StringRequest geoStringRequest;
     SupportMapFragment mapFragment;
     GoogleMap map;
+    ImageView imageView;
 
     //RequestQueue initialized
     @Override
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        imageView = findViewById(R.id.imageView2);
         darkSkyToDisplay(findViewById(android.R.id.content));
         searchView = (SearchView) findViewById(R.id.searchView);
         geoRequestQueue = Volley.newRequestQueue(this);
@@ -154,6 +158,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     humid.setText("Humidity: "+ currently.get("humidity"));
                     wind.setText("Wind Speed: "+ currently.get("windSpeed"));
                     precip.setText("Precipitation: "+ currently.get("icon"));
+
+                    String convertedicon = (String)currently.get("icon");
+                    convertedicon = convertedicon.replaceAll("-","_");
+
+                    imageView.setImageResource(getResources().getIdentifier(convertedicon, "drawable", getPackageName()));
 
                     //Displays the information on the screen
                     Toast.makeText(getApplicationContext(), "timezone: "+ jsonobj.get("timezone"), Toast.LENGTH_LONG).show();
