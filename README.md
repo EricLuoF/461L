@@ -1,5 +1,5 @@
 # 461L
-LOG:
+LOG:<br/>
 Wednesday 9/11:
 1 hour Eric and Neel plotted out the app and worked on icon designs.
 Thursday 9/12: 
