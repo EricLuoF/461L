@@ -34,7 +34,7 @@ import org.w3c.dom.Text;
 
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
-
+    //Neel Driving
     String init_location = "42.3601,-71.0589";
     double lat = 42.3601;
     double longe = -71.0589;
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     StringRequest geoStringRequest;
     SupportMapFragment mapFragment;
     GoogleMap map;
+
     //RequestQueue initialized
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
     }
+    //Neel Driving
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -123,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         map = googleMap;
 
     }
-
+    //Eric Driving
     public void darkSkyToDisplay(View view) {
         RequestQueue mRequestQueue;
         StringRequest mStringRequest;
