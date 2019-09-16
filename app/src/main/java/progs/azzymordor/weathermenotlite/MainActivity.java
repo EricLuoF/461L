@@ -165,11 +165,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     imageView.setImageResource(getResources().getIdentifier(convertedicon, "drawable", getPackageName()));
 
                     //Displays the information on the screen
-                    Toast.makeText(getApplicationContext(), "timezone: "+ jsonobj.get("timezone"), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Timezone: "+ jsonobj.get("timezone"), Toast.LENGTH_LONG).show();
 //                    Toast.makeText(getApplicationContext(), "Time :" + response.toString(), Toast.LENGTH_LONG).show();
 
-                } catch (Exception e) {
-                    textView.setText("Input from url is not JSON formatted");
+                } catch (ParseException e) {
+                    Toast.makeText(getApplicationContext(),"Parsing Exception, Bad Response",Toast.LENGTH_SHORT);
                 }
 //                    Object object = new JSONParser().parse(response);
 //                    JSONObject jsonobj = (JSONObject) object;
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                textView.setText("GET failed");
+                Toast.makeText(getApplicationContext(),"GET Failed",Toast.LENGTH_SHORT);
             }
         });
 
