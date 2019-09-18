@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         geoRequestQueue = Volley.newRequestQueue(this);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(final String query) {
                 String url =  "https://maps.googleapis.com/maps/api/geocode/json?address="+ query +",+CA&key="+"AIzaSyAzC8p8YQBXWQIAX5oxZDGL_TgKCo0Xn40";
 
                 //String Request initialized
@@ -77,18 +77,32 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             Object object = new JSONParser().parse(response);
                             JSONObject jsonobj = (JSONObject) object;
                             //Grabs the currently list from inside the JSON.
-                            JSONArray results = (JSONArray) jsonobj.get("results");
-                            JSONObject geometry = (JSONObject) ((JSONObject) results.get(0)).get("geometry");
-                            JSONObject location =  (JSONObject) geometry.get("location");
-                            //Gets each of the 4 vars that we need
-                            lat = Double.valueOf(location.get("lat").toString());
-                            longe = Double.valueOf(location.get("lng").toString());
-                            LatLng loc = new LatLng(lat, longe);
-                            darkSkyToDisplay(findViewById(android.R.id.content));
-                            currentM.remove();
-                            currentM = map.addMarker(new MarkerOptions().position(loc)
-                                    .title("Marker in location"));
-                            map.moveCamera(CameraUpdateFactory.newLatLng(loc));
+                            String status =  (String) jsonobj.get("status");
+                            if(!status.equals("OK")){
+                                Toast.makeText(getApplicationContext(),"Invalid Address entered",Toast.LENGTH_SHORT);
+                                Log.v("searchView","request not OK");
+                            }
+                            else {
+                                JSONArray results = (JSONArray) jsonobj.get("results");
+                                JSONObject geometry = (JSONObject) ((JSONObject) results.get(0)).get("geometry");
+                                JSONObject location = (JSONObject) geometry.get("location");
+                                //Gets each of the 4 vars that we need
+                                lat = Double.valueOf(location.get("lat").toString());
+                                longe = Double.valueOf(location.get("lng").toString());
+                                Log.v("searchView","lat =" +lat+",  longe ="+longe);
+                                if(lat == 36.778261 && longe == -119.4179324 && !(query.contains("LA")||query.contains("Los Angeles"))){
+                                    Toast.makeText(getApplicationContext(),"Invalid Address entered",Toast.LENGTH_SHORT).show();
+                                    Log.v("searchView","request not OK but status OK");
+                                }
+                                else {
+                                    LatLng loc = new LatLng(lat, longe);
+                                    darkSkyToDisplay(findViewById(android.R.id.content));
+                                    currentM.remove();
+                                    currentM = map.addMarker(new MarkerOptions().position(loc)
+                                            .title("Marker in location"));
+                                    map.moveCamera(CameraUpdateFactory.newLatLng(loc));
+                                }
+                           }
                         } catch (ParseException e) {
                             Toast.makeText(getApplicationContext(),"Parsing Exception, Bad Response",Toast.LENGTH_SHORT);
                         }
