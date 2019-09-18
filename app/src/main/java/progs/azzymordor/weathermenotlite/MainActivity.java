@@ -170,10 +170,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     TextView humid = (TextView) findViewById(R.id.humidity);
                     TextView wind = (TextView) findViewById(R.id.windspeed);
                     TextView precip = (TextView) findViewById(R.id.precipitation);
-                    temp.setText("Temperature: "+ currently.get("temperature"));
-                    humid.setText("Humidity: "+ currently.get("humidity"));
-                    wind.setText("Wind Speed: "+ currently.get("windSpeed"));
-                    precip.setText("Precipitation: "+ currently.get("icon"));
+                    temp.setText("Temperature\n"+ currently.get("temperature"));
+                    humid.setText("Humidity\n"+ currently.get("humidity"));
+                    wind.setText("Wind Speed\n"+ currently.get("windSpeed"));
+                    precip.setText("Precipitation\n"+ currently.get("icon"));
 
                     String convertedicon = (String)currently.get("icon");
                     convertedicon = convertedicon.replaceAll("-","_");
