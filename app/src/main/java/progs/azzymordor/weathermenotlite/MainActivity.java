@@ -84,13 +84,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             }
                             else {
                                 JSONArray results = (JSONArray) jsonobj.get("results");
+                                String address = (String) ((JSONObject)results.get(0)).get("formatted_address");
+                                Log.v("searchView","long namee= " +address);
                                 JSONObject geometry = (JSONObject) ((JSONObject) results.get(0)).get("geometry");
                                 JSONObject location = (JSONObject) geometry.get("location");
                                 //Gets each of the 4 vars that we need
                                 lat = Double.valueOf(location.get("lat").toString());
                                 longe = Double.valueOf(location.get("lng").toString());
                                 Log.v("searchView","lat =" +lat+",  longe ="+longe);
-                                if(lat == 36.778261 && longe == -119.4179324 && !(query.contains("LA")||query.contains("Los Angeles"))){
+                                if((lat >= 34 && lat <= 38) && (longe >= -123 && longe <= -118) && !(query.equals("LA")||query.equals("Los Angeles"))){
                                     Toast.makeText(getApplicationContext(),"Invalid Address entered",Toast.LENGTH_SHORT).show();
                                     Log.v("searchView","request not OK but status OK");
                                 }
